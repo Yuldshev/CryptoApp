@@ -7,7 +7,7 @@ struct CoinsView: View {
   
   //MARK: - Body
   var body: some View {
-    ScrollView {
+    ScrollView(.vertical, showsIndicators: false) {
       CryptoStatsView(barData: true)
         .padding(.top, 10)
       

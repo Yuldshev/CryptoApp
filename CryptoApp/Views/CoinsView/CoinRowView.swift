@@ -26,7 +26,7 @@ struct CoinRowView: View {
 extension CoinRowView {
   private var lefColumn: some View {
     HStack(spacing: 18) {
-      RoundedRectangle(cornerRadius: 18)
+      CoinImageView(coin: coin)
         .frame(width: 56, height: 56)
         .foregroundStyle(.orange.opacity(0.1))
       Text(coin.symbol.uppercased())

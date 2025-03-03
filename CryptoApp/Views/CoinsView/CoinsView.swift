@@ -14,6 +14,7 @@ struct CoinsView: View {
       SortBarView(isShowHolding: false)
         .padding(.top, 20)
       
+      
       ForEach(vm.allCoins) { coin in
         CoinRowView(coin: coin, showHoldingsColumn: false)
       }

@@ -7,8 +7,8 @@ struct CoinsView: View {
   //MARK: - Body
   var body: some View {
     ScrollView(.vertical, showsIndicators: false) {
-      CryptoStatsView(barData: true)
-        .padding(.top, 10)
+      CoinStatsView(showPortfolio: false)
+        .environmentObject(vm)
       
       SortBarView(isShowHolding: false)
         .padding(.top, 20)

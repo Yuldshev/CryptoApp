@@ -1,20 +1,30 @@
 import SwiftUI
 
 struct CoinsView: View {
-  @State var searchText = ""
+  //MARK: - Properties
+  @EnvironmentObject private var vm: CoinViewModel
+  @State private var searchText = ""
   
+  //MARK: - Body
   var body: some View {
-    NavigationStack {
-      ScrollView {
-        CryptoStatsView(barData: true)
-          .padding(.top, 10)
+    ScrollView {
+      CryptoStatsView(barData: true)
+        .padding(.top, 10)
+      
+      SortBarView(isShowHolding: false)
+        .padding(.top, 20)
+      
+      ForEach(vm.allCoins) { coin in
+        CoinRowView(coin: coin, showHoldingsColumn: false)
       }
-      .navigationTitle("Live prices")
-      .searchable(text: $searchText, prompt: "Search")
     }
+    .navigationTitle("Live prices")
+    .searchable(text: $searchText, prompt: "Search")
   }
 }
 
+//MARK: - Preview
 #Preview {
   CoinsView()
+    .environmentObject(CoinViewModel())
 }

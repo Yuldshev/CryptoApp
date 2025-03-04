@@ -41,7 +41,7 @@ extension EditPortfolioView {
   var portfolioScrollView: some View {
     ScrollView(.horizontal, showsIndicators: false) {
       LazyHStack(spacing: 10) {
-        ForEach(vm.allCoins, id: \.id) { coin in
+        ForEach(vm.searchText.isEmpty ? vm.portfolioCoins : vm.allCoins, id: \.id) { coin in
           PortfolioCoinView(coin: coin)
             .onTapGesture {
               withAnimation(.easeIn) {

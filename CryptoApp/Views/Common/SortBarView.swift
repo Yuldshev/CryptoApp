@@ -8,13 +8,45 @@ struct SortBarView: View {
   //MARK: - Body
   var body: some View {
     HStack {
-      Text("Coins")
+      HStack(spacing: 4) {
+        Text("Coins")
+        Image(systemName: "chevron.down")
+          .opacity((vm.sortOption == .rank || vm.sortOption == .rankReversed) ? 1 : 0)
+          .rotationEffect(.degrees(vm.sortOption == .rank ? 0 : 180))
+      }
+      .onTapGesture {
+        withAnimation {
+          vm.sortOption = vm.sortOption == .rank ? .rankReversed : .rank
+        }
+      }
+      
       Spacer()
       if isShowHolding {
-        Text("Holdings")
+        HStack(spacing: 4) {
+          Text("Holdings")
+          Image(systemName: "chevron.down")
+            .opacity((vm.sortOption == .holdings || vm.sortOption == .holdingsReversed) ? 1 : 0)
+            .rotationEffect(.degrees(vm.sortOption == .holdings ? 0 : 180))
+        }
+        .onTapGesture {
+          withAnimation {
+            vm.sortOption = vm.sortOption == .holdings ? .holdingsReversed : .holdings
+          }
+        }
       }
-      Text("Price")
-        .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
+      
+      HStack(spacing: 4) {
+        Text("Price")
+        Image(systemName: "chevron.down")
+          .opacity((vm.sortOption == .price || vm.sortOption == .priceReversed) ? 1 : 0)
+          .rotationEffect(.degrees(vm.sortOption == .price ? 0 : 180))
+      }
+      .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
+      .onTapGesture {
+        withAnimation {
+          vm.sortOption = vm.sortOption == .price ? .priceReversed : .price
+        }
+      }
       
       Button {
         withAnimation {

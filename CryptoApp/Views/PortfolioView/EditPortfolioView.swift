@@ -45,7 +45,7 @@ extension EditPortfolioView {
           PortfolioCoinView(coin: coin)
             .onTapGesture {
               withAnimation(.easeIn) {
-                selectCoin = coin
+                updateCoin(coin: coin)
               }
             }
             .background(RoundedRectangle(cornerRadius: 18)
@@ -71,6 +71,9 @@ extension EditPortfolioView {
         TextField("Ex: 1.4", text: $quantityText)
           .multilineTextAlignment(.trailing)
           .keyboardType(.decimalPad)
+          .onChange(of: quantityText) { newValue, oldValue in
+            quantityText = newValue.replacingOccurrences(of: ",", with: ".")
+          }
       }
       Divider()
       HStack {
@@ -91,7 +94,24 @@ extension EditPortfolioView {
   }
   
   private func savePressed() {
-    guard let coin = selectCoin else { return }
+    guard
+      let coin = selectCoin,
+      let amount = Double(quantityText)
+    else { return }
+    
+    vm.updatePortfolio(coin: coin, amount: amount)
+    dismiss()
+  }
+  
+  private func updateCoin(coin: CoinModel) {
+    selectCoin = coin
+    
+    if let portfolioCoin = vm.portfolioCoins.first(where: { $0.id == coin.id }),
+       let amount = portfolioCoin.currentHoldings {
+      quantityText = "\(amount)"
+    } else {
+      quantityText = ""
+    }
   }
 }
 

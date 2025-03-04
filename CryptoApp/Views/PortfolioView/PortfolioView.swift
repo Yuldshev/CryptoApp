@@ -13,6 +13,12 @@ struct PortfolioView: View {
       
       SortBarView(isShowHolding: true)
         .padding(.top, 20)
+      
+      LazyVStack(spacing: 0) {
+        ForEach(vm.portfolioCoins) { coin in
+          CoinRowView(coin: coin, showHoldingsColumn: true)
+        }
+      }
     }
     .navigationTitle("Portfolio")
     .searchable(text: $vm.searchText, prompt: "Search")

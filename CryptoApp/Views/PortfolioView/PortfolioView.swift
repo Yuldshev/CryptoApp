@@ -3,6 +3,7 @@ import SwiftUI
 struct PortfolioView: View {
   //MARK: - Properties
   @EnvironmentObject private var vm: CoinViewModel
+  @State private var showPortfolio = false
   
   //MARK: - Body
   var body: some View {
@@ -13,10 +14,26 @@ struct PortfolioView: View {
       SortBarView(isShowHolding: true)
         .padding(.top, 20)
     }
+    .navigationTitle("Portfolio")
+    .searchable(text: $vm.searchText, prompt: "Search")
+    .keyboardType(.webSearch)
+    .toolbar {
+      ToolbarItem {
+        Button("Add coin") {
+          showPortfolio.toggle()
+        }
+      }
+    }
+    .sheet(isPresented: $showPortfolio) {
+      EditPortfolioView()
+        .environmentObject(vm)
+    }
   }
 }
 
 #Preview {
-  PortfolioView()
-    .environmentObject(CoinViewModel())
+  NavigationStack {
+    PortfolioView()
+      .environmentObject(CoinViewModel())
+  }
 }

@@ -10,9 +10,6 @@ struct MainView: View {
       NavigationStack {
         CoinsView()
           .environmentObject(vm)
-          .navigationTitle("Live prices")
-          .searchable(text: $vm.searchText, prompt: "Search")
-          .keyboardType(.webSearch)
           }
       .tabItem {
         Label("Coins", systemImage: "bitcoinsign.circle")
@@ -21,9 +18,6 @@ struct MainView: View {
       NavigationStack {
         PortfolioView()
           .environmentObject(vm)
-          .navigationTitle("Portfolio")
-          .searchable(text: $vm.searchText, prompt: "Search")
-          .keyboardType(.webSearch)
           }
       .tabItem {
         Label("Portfolio", systemImage: "bag.fill")

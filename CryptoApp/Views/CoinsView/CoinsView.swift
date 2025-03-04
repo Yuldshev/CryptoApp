@@ -19,13 +19,17 @@ struct CoinsView: View {
           CoinRowView(coin: coin, showHoldingsColumn: false)
         }
       }
+      .navigationTitle("Live prices")
+      .searchable(text: $vm.searchText, prompt: "Search")
+      .keyboardType(.webSearch)
     }
-    
   }
 }
 
 //MARK: - Preview
 #Preview {
-  CoinsView()
-    .environmentObject(CoinViewModel())
+  NavigationStack {
+    CoinsView()
+      .environmentObject(CoinViewModel())
+  }
 }

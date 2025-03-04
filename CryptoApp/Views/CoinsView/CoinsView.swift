@@ -6,18 +6,23 @@ struct CoinsView: View {
   
   //MARK: - Body
   var body: some View {
-    ScrollView(.vertical, showsIndicators: false) {
+    VStack {
       CoinStatsView(showPortfolio: false)
         .environmentObject(vm)
       
       SortBarView(isShowHolding: false)
+        .environmentObject(vm)
         .padding(.top, 20)
       
       
-      LazyVStack(spacing: 0) {
-        ForEach(vm.allCoins) { coin in
-          CoinRowView(coin: coin, showHoldingsColumn: false)
-        }
+      List(vm.allCoins) { coin in
+        CoinRowView(coin: coin, showHoldingsColumn: false)
+          .listRowSeparator(.hidden)
+      }
+      .listStyle(.plain)
+      .scrollIndicators(.hidden)
+      .refreshable {
+        vm.reloadData()
       }
       .navigationTitle("Live prices")
       .searchable(text: $vm.searchText, prompt: "Search")

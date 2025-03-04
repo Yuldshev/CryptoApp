@@ -17,8 +17,6 @@ struct CoinRowView: View {
       }
       rightColumn
     }
-    .padding(.horizontal, 20)
-    .padding(.vertical, 10)
   }
 }
 
@@ -27,7 +25,7 @@ extension CoinRowView {
   private var lefColumn: some View {
     HStack(spacing: 18) {
       CoinImageView(coin: coin)
-        .frame(width: 56, height: 56)
+        .frame(width: 48, height: 48)
         .foregroundStyle(.orange.opacity(0.1))
       Text(coin.symbol.uppercased())
         .font(.title3)

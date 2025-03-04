@@ -3,6 +3,7 @@ import SwiftUI
 struct SortBarView: View {
   //MARK: - Properties
   var isShowHolding: Bool
+  @EnvironmentObject var vm: CoinViewModel
   
   //MARK: - Body
   var body: some View {
@@ -14,6 +15,15 @@ struct SortBarView: View {
       }
       Text("Price")
         .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
+      
+      Button {
+        withAnimation {
+          vm.reloadData()
+        }
+      } label: {
+        Image(systemName: "goforward")
+      }
+      .rotationEffect(.degrees(vm.isLoading ? 360 : 0))
     }
     .font(.caption)
     .padding(.horizontal, 20)
@@ -22,5 +32,5 @@ struct SortBarView: View {
 
 //MARK: - Preview
 #Preview {
-  SortBarView(isShowHolding: false)
+  SortBarView(isShowHolding: false).environmentObject(CoinViewModel())
 }

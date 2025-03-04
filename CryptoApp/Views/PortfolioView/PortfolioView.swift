@@ -25,8 +25,10 @@ struct PortfolioView: View {
       }
     }
     .sheet(isPresented: $showPortfolio) {
-      EditPortfolioView()
-        .environmentObject(vm)
+      NavigationStack {
+        EditPortfolioView()
+          .environmentObject(vm)
+      }
     }
   }
 }

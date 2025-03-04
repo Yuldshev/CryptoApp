@@ -8,7 +8,7 @@ class DeveloperPreview {
   let coin = CoinModel(
     id: "bitcoin",
     symbol: "btc",
-    name: "Bitcoin",
+    name: "Bitcoinnnnnn",
     image: "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
     currentPrice: 92799,
     marketCap: 1839046971089,

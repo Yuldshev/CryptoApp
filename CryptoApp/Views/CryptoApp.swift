@@ -8,10 +8,8 @@ struct CryptoApp: App {
   //MARK: - Body
   var body: some Scene {
     WindowGroup {
-      NavigationStack {
-        CoinsView()
-      }
-      .environmentObject(vm)
+      MainView()
+        .environmentObject(vm)
     }
   }
 }

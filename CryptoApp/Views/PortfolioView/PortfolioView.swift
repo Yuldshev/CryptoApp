@@ -1,31 +1,22 @@
 import SwiftUI
 
-struct CoinsView: View {
+struct PortfolioView: View {
   //MARK: - Properties
   @EnvironmentObject private var vm: CoinViewModel
   
   //MARK: - Body
   var body: some View {
     ScrollView(.vertical, showsIndicators: false) {
-      CoinStatsView(showPortfolio: false)
+      CoinStatsView(showPortfolio: true)
         .environmentObject(vm)
       
-      SortBarView(isShowHolding: false)
+      SortBarView(isShowHolding: true)
         .padding(.top, 20)
-      
-      
-      LazyVStack(spacing: 0) {
-        ForEach(vm.allCoins) { coin in
-          CoinRowView(coin: coin, showHoldingsColumn: false)
-        }
-      }
     }
-    
   }
 }
 
-//MARK: - Preview
 #Preview {
-  CoinsView()
+  PortfolioView()
     .environmentObject(CoinViewModel())
 }

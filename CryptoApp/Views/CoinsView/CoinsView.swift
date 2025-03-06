@@ -16,8 +16,10 @@ struct CoinsView: View {
       
       
       List(vm.allCoins) { coin in
-        CoinRowView(coin: coin, showHoldingsColumn: false)
-          .listRowSeparator(.hidden)
+        NavigationLink { LazyView(DetailCoinView(coin: coin)) } label: {
+          CoinRowView(coin: coin, showHoldingsColumn: false)
+            .listRowSeparator(.hidden)
+        }
       }
       .listStyle(.plain)
       .scrollIndicators(.hidden)
@@ -28,6 +30,19 @@ struct CoinsView: View {
       .searchable(text: $vm.searchText, prompt: "Search")
       .keyboardType(.webSearch)
     }
+  }
+}
+
+//MARK: - LazyView
+struct LazyView<Content: View>: View {
+  let build: () -> Content
+  
+  init(_ build: @autoclosure @escaping () -> Content) {
+    self.build = build
+  }
+  
+  var body: Content {
+    build()
   }
 }
 

@@ -33,7 +33,7 @@ class CoinViewModel: ObservableObject {
       .store(in: &cancellables)
     
     $allCoins
-      .combineLatest(portfolioDataService.$saveEntity)
+      .combineLatest(portfolioDataService.$savedEntities)
       .map(mapAllCoins)
       .sink { [weak self] coin in
         guard let self = self else { return }
@@ -106,7 +106,7 @@ class CoinViewModel: ObservableObject {
   private func mapAllCoins(coinModels: [CoinModel], entity: [Portfolio]) -> [CoinModel] {
     coinModels.compactMap { coin -> CoinModel? in
       guard let entity = entity.first(where: { $0.coinID == coin.id }) else {
-        return nil
+        return coin
       }
       return coin.updateHoldings(amount: entity.amount)
     }

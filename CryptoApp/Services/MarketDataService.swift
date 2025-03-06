@@ -3,20 +3,20 @@ import Combine
 
 class MarketDataService {
   @Published var marketData: MarketDataModel?
-  var marketDataSubs: AnyCancellable?
+  private var cancellables = Set<AnyCancellable>()
   
   init() {
     getData()
   }
   
   func getData() {
-    guard let url = URL(string: "https://api.coingecko.com/api/v3/global") else { return }
+    guard let url = Endpoint.globalMarketData() else { return }
     
-    marketDataSubs = NetworkManager.download(url: url)
+    NetworkManager.download(url: url)
       .decode(type: GlobalData.self, decoder: JSONDecoder())
       .sink(receiveCompletion:  NetworkManager.handleCompletion, receiveValue: { [weak self] globalData in
         self?.marketData = globalData.data
-        self?.marketDataSubs?.cancel()
       })
+      .store(in: &cancellables)
   }
 }

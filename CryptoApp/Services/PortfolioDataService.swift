@@ -2,24 +2,23 @@ import Foundation
 import CoreData
 
 class PortfolioDataService {
-  @Published var saveEntity: [Portfolio] = []
-  
+  @Published var savedEntities: [Portfolio] = []
   private let container: NSPersistentContainer
   private let containerName = "PortfolioContainer"
   
   init() {
     container = NSPersistentContainer(name: containerName)
-    container.loadPersistentStores { _, error in
+    container.loadPersistentStores { [weak self] _, error in
       if let error = error {
         print("Error loading Core Data! \(error)")
       }
-      self.getPortfolio()
+      self?.getPortfolio()
     }
   }
   
   //MARK: - Public
   func updatePortfolio(coin: CoinModel, amount: Double) {
-    if let entity = saveEntity.first(where: { $0.coinID == coin.id }) {
+    if let entity = savedEntities.first(where: { $0.coinID == coin.id }) {
       if amount > 0 {
         update(entity: entity, amount: amount)
       } else {
@@ -34,9 +33,9 @@ class PortfolioDataService {
   private func getPortfolio() {
     let requst = NSFetchRequest<Portfolio>(entityName: "Portfolio")
     do {
-      saveEntity = try container.viewContext.fetch(requst)
-    } catch let error {
-      print("Error fetching data! \(error)")
+      savedEntities = try container.viewContext.fetch(requst)
+    } catch {
+      print("Error fetching portfolio: \(error)")
     }
   }
   
@@ -52,17 +51,17 @@ class PortfolioDataService {
     applyChanges()
   }
   
-  private func save() {
-    do {
-      try container.viewContext.save()
-    } catch let error {
-      print("Error save context! \(error)")
-    }
-  }
-  
   private func delete(entity: Portfolio) {
     container.viewContext.delete(entity)
     applyChanges()
+  }
+  
+  private func save() {
+    do {
+      try container.viewContext.save()
+    } catch {
+      print("Error saving context: \(error)")
+    }
   }
   
   private func applyChanges() {

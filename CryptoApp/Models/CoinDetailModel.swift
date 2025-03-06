@@ -1,7 +1,13 @@
 import Foundation
 
-struct CoinDetailModel: Identifiable, Codable {
-  let id, symbol, name: String?
+protocol CoinIdentifiable: Identifiable {
+    var id: String { get }
+    var symbol: String { get }
+    var name: String { get }
+}
+
+struct CoinDetailModel: CoinIdentifiable, Codable {
+  let id, symbol, name: String
   let blockTimeInMinutes: Int?
   let hashingAlgorithm: String?
   let description: Description?

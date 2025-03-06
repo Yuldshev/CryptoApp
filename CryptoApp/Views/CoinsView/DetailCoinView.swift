@@ -15,12 +15,14 @@ struct DetailCoinView: View {
   
   //MARK: - Body
   var body: some View {
-    ScrollView {
+    ScrollView(.vertical, showsIndicators: false) {
       VStack(spacing: 20) {
-        Text("")
+        ChartView(coin: vm.coin)
           .frame(height: 150)
+          .padding(.vertical, 10)
         
         OverviewView(stats: vm.overviewStats, columns: column)
+          .padding(.top, 30)
         Divider()
         AdditionalView(stats: vm.additionalStats, columns: column)
         Divider()
